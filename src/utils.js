@@ -1,3 +1,4 @@
+import fixed from './libs/_fixed';
 const to = {};
 const nullish = BASE_NULLISH;
 
@@ -20,8 +21,28 @@ export const array = (data) => ({
     );
   },
 });
+export const TYPES = [
+  'string',
+  'number',
+  'number',
+  'boolean',
+  'symbol',
+  'null',
+  'undefined',
+  'object',
+  'array',
+  'regexp',
+  'date',
+  'error',
+  'function',
+  'function',
+  'asyncfunction',
+  'htmldocument',
+];
 export const what = {
   type: (value) => typeof value,
+
+  // TODO : replace with BASE_CONSTRUCTOR(value) -> constructor.lowerCase
   construct(value) {
     if (!nullish(value)) {
       let regex = /function (.{1,})\(/i;
@@ -31,11 +52,23 @@ export const what = {
     }
     return 'nullish';
   },
+
+  // TODO : move to BASE_PROTOTYPE(value) -> proto.lowerCase
   proto(value) {
     let regex = /\[object (.*?)\]/i;
     let exactPrototype = Object.prototype.toString.call(value);
     let exactType = regex.exec(exactPrototype)[1];
     return exactType.toLowerCase();
+  },
+
+  // TODO : remove `is` prefix
+  isProto(value, type) {
+    if (fixed.from(TYPES).match(type)) return what.proto(value) === type;
+
+    // TODO : replace `TypeError` with internal type-error on `fixed` type
+    throw new TypeError(
+      `[what.isProto] : argument \`type\` should be a valid type and ${type} is invalid`
+    );
   },
   base(value) {
     // TODO : work with YEKTypes
