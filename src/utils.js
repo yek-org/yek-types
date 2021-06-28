@@ -1,24 +1,44 @@
-const [to, from] = [{}, {}];
+const to = {};
+const nullish = BASE_NULLISH;
 
 to.enumic = function Enumic(enums) {
-	let obj = Object.create({});
-	enums.reduce((prev, current) => {
-		return Object.assign(obj, { [current]: current });
-	}, {});
-	return obj;
-};
-from.construct = function (value) {
-	if ([undefined, null].indexOf(value) == -1) {
-		let res = /function (.{1,})\(/.exec(value.constructor.toString());
-		return res?.length > 1 ? res[1].toLowerCase() : 'TypeError';
-	}
-	return 'nullish';
+  let obj = Object.create({});
+  enums.reduce((prev, current) => {
+    return Object.assign(obj, { [current]: current });
+  }, {});
+  return obj;
 };
 
-export { from, to };
-export function type(value) {
-	return typeof value;
-}
-export function base(value) {
-	return value?.constructor;
-}
+export { to };
+export const array = (data) => ({
+  has(target) {
+    return data.indexOf(target) > -1;
+  },
+  equal(target) {
+    return (
+      data.length === target.length && data.every((v, i) => v === target[i])
+    );
+  },
+});
+export const what = {
+  type: (value) => typeof value,
+  construct(value) {
+    if (!nullish(value)) {
+      let regex = /function (.{1,})\(/i;
+      let exactConstructor = value.constructor.toString();
+      let exec = regex.exec(exactConstructor);
+      return exec?.length > 1 ? exec[1].toLowerCase() : 'TypeError';
+    }
+    return 'nullish';
+  },
+  proto(value) {
+    let regex = /\[object (.*?)\]/i;
+    let exactPrototype = Object.prototype.toString.call(value);
+    let exactType = regex.exec(exactPrototype)[1];
+    return exactType.toLowerCase();
+  },
+  base(value) {
+    // TODO : work with YEKTypes
+  },
+};
+export const unique = (() => ((id = 0), (step = 1) => (id += step)))();
