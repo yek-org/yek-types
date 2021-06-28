@@ -1,14 +1,14 @@
 const tuple = (...items) => {
-	return {
-		match(arg) {
-			// TODO : use `base-check-type`
-			return items.every((item) => item === arg);
-		},
-	};
+  return {
+    match(arg) {
+      // TODO : use `base-check-type`
+      return items.every((item) => item === arg);
+    },
+  };
 };
 
 tuple.from = function (items) {
-	return tuple(...Object.values(items));
+  return tuple(...Object.values(items));
 };
 
 // tuple(['string', 'number', 'boolean']).match(['jsx']); // false [error: missed items]
