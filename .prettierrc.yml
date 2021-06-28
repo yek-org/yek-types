@@ -1,8 +1,8 @@
 ---
-useTabs: true
+useTabs: false
 arrowParens: always
 bracketSpacing: true
 printWidth: 80
-tabWidth: 4
+tabWidth: 2
 singleQuote: true
 quoteProps: as-needed
