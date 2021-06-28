@@ -1,4 +1,7 @@
+import { what } from '../utils.js';
+
 export const BASE_FUNCTION = {
+  // TODO : replace all `what.proto` with `what.isProto`
   ALL(arg) {
     return array([
       'function',
@@ -22,28 +25,35 @@ export const BASE_FUNCTION = {
 };
 export const BASE_ARRAY = {
   NORM(arg) {
-    return [''];
+    // TODO : use TYPES enum and replace with `return what.isProto(arg, TYPES.ARRAY);`
+    // TODO : remove `is` prefix from `isProto` method and use `proto` instead
+    return what.isProto(arg, 'array');
   },
-  LIKE(arg) {},
+  LIKE(arg) {
+    // FIXME : need the some logic
+  },
 };
 export const BASE_NULLISH = (value) => array([undefined, null]).has(value);
 
+// TODO : replace `isProto(value, 'string')` with `base.proto(value, TYPES.STRING);`
+export const BASE_STRING = (value) => what.isProto(value, 'string');
+
 /**
  * TYPES [native]
- * what.proto('hello world');           // string
- * what.proto(1000);                    // number
- * what.proto(Infinity);                // number
- * what.proto(true);                    // boolean
- * what.proto(Symbol());                // symbol
- * what.proto(null);                    // null
- * what.proto(undefined);               // undefined
- * what.proto({});                      // object
- * what.proto([]);                      // array
- * what.proto(/[a-z]/g);                // regexp
- * what.proto(new Date(2021));          // date
- * what.proto(new Error());             // error
- * what.proto(function() {});           // function
- * what.proto((a, b) => a + b);         // function
- * what.proto(async () => {});          // asyncfunction
- * what.proto(document);                // htmldocument
+ * [x] what.proto('hello world');           // string
+ * [ ] what.proto(1000);                    // number
+ * [ ] what.proto(Infinity);                // number
+ * [ ] what.proto(true);                    // boolean
+ * [ ] what.proto(Symbol());                // symbol
+ * [ ] what.proto(null);                    // null
+ * [ ] what.proto(undefined);               // undefined
+ * [ ] what.proto({});                      // object
+ * [x] what.proto([]);                      // array
+ * [ ] what.proto(/[a-z]/g);                // regexp
+ * [ ] what.proto(new Date(2021));          // date
+ * [ ] what.proto(new Error());             // error
+ * [x] what.proto(function() {});           // function
+ * [x] what.proto((a, b) => a + b);         // function
+ * [x] what.proto(async () => {});          // asyncfunction
+ * [x] what.proto(document);                // htmldocument
  */
