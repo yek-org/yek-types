@@ -1,4 +1,4 @@
-import { what } from '../utils';
+import { what, DefaultProps } from '../utils';
 
 enum TYPES {
 	STRING = 'string',
@@ -51,7 +51,6 @@ type bit =
 type length = number | string;
 type validate = boolean;
 type PropsType =
-	| DefaultProps
 	| StringProps
 	| NumberProps
 	| BooleanProps
@@ -59,14 +58,6 @@ type PropsType =
 	| ObjectProps
 	| EmptyProps;
 
-interface DefaultProps {
-	type?: string | { type: string } | TYPES | TypeName;
-	value?: any;
-	length?: { max?: length; min?: length } | [length, length];
-	min?: length;
-	max?: length;
-	empty?: boolean;
-}
 interface EmptyProps extends DefaultProps {
 	deep?: boolean;
 }
@@ -107,8 +98,7 @@ const is: ISInterface = function Is(
 	type?: string,
 	props?: PropsType
 ): ISType {
-	if (type) {
-	}
+	// if (type) {}
 	return {
 		props(props: PropsType): validate {
 			return false;
@@ -137,3 +127,5 @@ is.number = function (value: any, props?: PropsType): validate {
 is.empty = function (value: any, props?: EmptyProps): validate {
 	return false;
 };
+
+export default is;
