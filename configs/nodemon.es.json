@@ -1,0 +1,10 @@
+{
+  "restartable": "rs",
+  "ignore": [".git", "node_modules/", "dist/", "coverage/"],
+  "watch": ["src/"],
+  "exec": "babel-node src/index.js",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js,json"
+}
