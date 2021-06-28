@@ -1,21 +1,21 @@
 const fixed = (...fixes) => {
-	return {
-		match(value) {
-			return !!fixes.find((v) => value === v);
-		},
-		which(value) {
-			return fixes.find((v) => value === v);
-		},
-		enumic() {
-			let obj = {};
-			fixes.map((fix) => Object.assign(obj, { [fix]: fix }));
-			return Object.freeze(obj);
-		},
-	};
+  return {
+    match(value) {
+      return !!fixes.find((v) => value === v);
+    },
+    which(value) {
+      return fixes.find((v) => value === v);
+    },
+    enumic() {
+      let obj = {};
+      fixes.map((fix) => Object.assign(obj, { [fix]: fix }));
+      return Object.freeze(obj);
+    },
+  };
 };
 
 fixed.from = function (types) {
-	return fixed(...Object.values(types));
+  return fixed(...Object.values(types));
 };
 
 // fixed('js', 'ts', 'json').match('jsx'); // false
