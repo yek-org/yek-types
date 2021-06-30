@@ -1,19 +1,29 @@
-import { to, what } from '../utils';
+import { to, base } from '../utils.js';
+import list from '../libs/_list.js';
+
+/**
+ * ! TODO :
+ * - [ ] : `union('string', 'number');`
+ * - [ ] : `union('string|number');`
+ * - [ ] : `union('string | number');`
+ * - [ ] : `union(type.string, type.number);`
+ * - [ ] : `union(type('string'), interface('string'), tuple('string', 'number'));`
+ */
 
 const union = (...types) => {
+  // TODO : use `list(...TYPES).all.match(...types);`
   return {
     type: to.enumic(types),
     match(value) {
-      // TODO : replace `wath.construct` with `wath.proto`
-      let res = types.find((type) => what.construct(value) === type);
+      let res = types.find((type) => base.isProto(value, type));
       if (res) return value;
-      return { value, type: what.construct(value) };
+      return { value, type: base.proto(value) };
     },
     matchSync(value) {
       return new Promise((resolve, reject) => {
-        let res = types.find((type) => what.construct(value) === type);
+        let res = types.find((type) => base.isProto(value, type));
         if (res) resolve(value);
-        reject({ value, type: what.construct(value) });
+        reject({ value, type: base.proto(value) });
       });
     },
   };
