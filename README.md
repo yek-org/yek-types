@@ -11,7 +11,7 @@
 ## we working hard to first release ✌️
 
 <p align="center">
-<img src="https://www.reactiongifs.us/wp-content/uploads/2018/06/giphy-2-1.gif" width="300px" />
+<img src="https://www.reactiongifs.us/wp-content/uploads/2018/06/giphy-2-1.gif" />
 <p align="center">
 Please Wait... We are working hard too 😁
 </p>
