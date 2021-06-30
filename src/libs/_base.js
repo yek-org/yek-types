@@ -1,33 +1,63 @@
-import { what } from '../utils.js';
+import { base } from '../utils.js';
+
+// TODO : move file to base/ folder
+// TODO : export `TYPES` to type/ folder
+
+const BASE_TYPES = {
+  FUNCTION: 'function',
+
+  // TODO : 'generator' || 'genfunc' || 'gen-function'
+  GENERATOR: 'generatorfunction',
+
+  // TODO : 'async' || 'asyncfunc' || 'async-func'
+  ASYNC: 'asyncfunction',
+  PROMISE: 'promise',
+  ARRAY: 'array',
+  STRING: 'string',
+  NUMBER: 'number',
+  BOOLEAN: 'boolean',
+  REGEXP: 'regexp',
+};
+
+const BASE = {
+  ALL_FUNCTIONS: /(function|async|generator|promise)/i,
+  FUNCTION: /function/i,
+  GENERATOR: /(generator|gen|generic|genfunc|generatorfunction)/i,
+  ASYNC: /(async|asyncfunction|async-func)/i,
+  PROMISE: /promise/i,
+  ARRAY: /array/i,
+  STRING: /string/i,
+  NUMBER: /number/i,
+  BOOLEAN: /boolean/i,
+  REGEXP: /regexp/i,
+};
 
 export const BASE_FUNCTION = {
-  // TODO : replace all `what.proto` with `what.isProto`
   ALL(arg) {
+    // TODO : change to `BASE_FUNCTION.FUNC && BASE_FUNCTION.ASYNC && ...`;
     return array([
-      'function',
-      'generatorfunction',
-      'asyncfunction',
-      'promise',
-    ]).has(what.proto(arg));
+      BASE_TYPES.FUNCTION,
+      BASE_TYPES.GENERATOR,
+      BASE_TYPES.ASYNC,
+      BASE_TYPES.PROMISE,
+    ]).has(base.proto(arg));
   },
-  NORM(arg) {
-    return what.proto(arg) === 'function';
+  FUNCTION(arg) {
+    return base.isProto(arg, BASE_TYPES.FUNCTION);
   },
-  GENERIC(arg) {
-    return what.proto(arg) === 'generatorfunction';
+  GENERATOR(arg) {
+    return base.isProto(arg, BASE_TYPES.GENERATOR);
   },
   ASYNC(arg) {
-    return what.proto(arg) === 'asyncfunction';
+    return base.isProto(arg, BASE_TYPES.ASYNC);
   },
   PROMISE(arg) {
-    return what.proto(arg) === 'promise';
+    return base.isProto(arg, BASE_TYPES.PROMISE);
   },
 };
 export const BASE_ARRAY = {
-  NORM(arg) {
-    // TODO : use TYPES enum and replace with `return what.isProto(arg, TYPES.ARRAY);`
-    // TODO : remove `is` prefix from `isProto` method and use `proto` instead
-    return what.isProto(arg, 'array');
+  ARRAY(arg) {
+    return base.isProto(arg, BASE_TYPES.ARRAY);
   },
   LIKE(arg) {
     // FIXME : need the some logic
@@ -36,24 +66,36 @@ export const BASE_ARRAY = {
 export const BASE_NULLISH = (value) => array([undefined, null]).has(value);
 
 // TODO : replace `isProto(value, 'string')` with `base.proto(value, TYPES.STRING);`
-export const BASE_STRING = (value) => what.isProto(value, 'string');
+export const BASE_STRING = (value) => base.isProto(value, BASE_TYPES.STRING);
+export const BASE_NUMBER = (value) => base.isProto(value, BASE_TYPES.NUMBER);
+export const BASE_BOOLEAN = (value) => base.isProto(value, BASE_TYPES.BOOLEAN);
+export const BASE_REGEXP = (value) => base.isProto(value, BASE_TYPES.REGEXP);
 
 /**
- * TYPES [native]
- * [x] what.proto('hello world');           // string
- * [ ] what.proto(1000);                    // number
- * [ ] what.proto(Infinity);                // number
- * [ ] what.proto(true);                    // boolean
- * [ ] what.proto(Symbol());                // symbol
- * [ ] what.proto(null);                    // null
- * [ ] what.proto(undefined);               // undefined
- * [ ] what.proto({});                      // object
- * [x] what.proto([]);                      // array
- * [ ] what.proto(/[a-z]/g);                // regexp
- * [ ] what.proto(new Date(2021));          // date
- * [ ] what.proto(new Error());             // error
- * [x] what.proto(function() {});           // function
- * [x] what.proto((a, b) => a + b);         // function
- * [x] what.proto(async () => {});          // asyncfunction
- * [x] what.proto(document);                // htmldocument
+ *  NATIVES
+ * ---------
+ * [x] base.proto('hello world');           // string
+ * [x] base.proto(1000);                    // number
+ * [x] base.proto(Infinity);                // number
+ * [x] base.proto(true);                    // boolean
+ * [ ] base.proto(Symbol());                // symbol
+ * [ ] base.proto(null);                    // null
+ * [ ] base.proto(undefined);               // undefined
+ * [ ] base.proto({});                      // object
+ * [x] base.proto([]);                      // array
+ * [x] base.proto(/[a-z]/g);                // regexp
+ * [ ] base.proto(new Date(2021));          // date
+ * [ ] base.proto(new Error());             // error
+ * [x] base.proto(function() {});           // function
+ * [x] base.proto((a, b) => a + b);         // function
+ * [x] base.proto(async () => {});          // asyncfunction
+ * [x] base.proto(document);                // htmldocument
+ *
+ *  EXTRA-TYPES
+ * -------------
+ * [ ] base.proto(1.5);                     // number (float)
+ * [ ] base.proto(-1.5);                    // number (signed-float)
+ * [ ] base.proto(-15);                     // number (signed)
+ * [ ] base.proto(15);                      // number (unsigned)
+ * [ ] base.proto(15 || '15');              // number (digit)
  */
