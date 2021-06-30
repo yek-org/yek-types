@@ -1,4 +1,4 @@
-const fixed = (...fixes) => {
+const list = (...fixes) => {
   return {
     match(value) {
       return !!fixes.find((v) => value === v);
@@ -14,13 +14,13 @@ const fixed = (...fixes) => {
   };
 };
 
-fixed.from = function (types) {
-  return fixed(...Object.values(types));
+list.from = function (types) {
+  return list(...Object.values(types));
 };
 
-// fixed('js', 'ts', 'json').match('jsx'); // false
-// fixed('js', 'ts', 'json').match('js'); // true
-// fixed('js', 'ts', 'json').enumic(); // { js, ts, json }
+// list('js', 'ts', 'json').match('jsx'); // false
+// list('js', 'ts', 'json').match('js'); // true
+// list('js', 'ts', 'json').enumic(); // { js, ts, json }
 // what is : for make a absolute list of values like tuple and enum but use value istead type
 
-export default fixed;
+export default list;
