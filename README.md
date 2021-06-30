@@ -181,8 +181,10 @@ C++, Python and Typescript who languages support tuples, but what is tuple?\
 tuple is fixed array that element are type no value for orderd type checking
 
 ```js
-let MyTuple = tuple(string, number, boolean);
-let MyValues = ['elment-1', 'elment-2', true];
+tuple(string, number, boolean).match(['element-1', 'element-2', true]);
+// [Yek/Error] : element 2 should be `number` but it is `string`, `'element-2'` invalid! 👎
+
+tuple(string, number, boolean).match(['element-1', 34, false]); // OKey 👍
 ```
 
 ### List
