@@ -1,4 +1,4 @@
-import fixed from './libs/_fixed';
+import list from './libs/_list';
 const to = {};
 const nullish = BASE_NULLISH;
 
@@ -21,6 +21,8 @@ export const array = (data) => ({
     );
   },
 });
+
+// TODO : replace with `TYPES` on _base.js
 export const TYPES = [
   'string',
   'number',
@@ -39,7 +41,7 @@ export const TYPES = [
   'asyncfunction',
   'htmldocument',
 ];
-export const what = {
+export const base = {
   type: (value) => typeof value,
 
   // TODO : replace with BASE_CONSTRUCTOR(value) -> constructor.lowerCase
@@ -63,15 +65,12 @@ export const what = {
 
   // TODO : remove `is` prefix
   isProto(value, type) {
-    if (fixed.from(TYPES).match(type)) return what.proto(value) === type;
+    if (list.from(TYPES).match(type)) return base.proto(value) === type;
 
-    // TODO : replace `TypeError` with internal type-error on `fixed` type
+    // TODO : replace `TypeError` with internal type-error on `list` type
     throw new TypeError(
-      `[what.isProto] : argument \`type\` should be a valid type and ${type} is invalid`
+      `[base.isProto] : argument \`type\` should be a valid type and ${type} is invalid`
     );
-  },
-  base(value) {
-    // TODO : work with YEKTypes
   },
 };
 export const unique = (() => ((id = 0), (step = 1) => (id += step)))();
